@@ -1,15 +1,12 @@
 {
-  "name": "ielts-perfect-platform",
-  "version": "3.0.0",
-  "description": "Complete IELTS Teaching Platform with All Features Working",
+  "name": "ielts-platform",
+  "version": "1.0.0",
+  "description": "IELTS Teaching Platform",
   "scripts": {
     "dev": "python3 -m http.server 3000",
-    "build": "echo 'No build process needed for static site'",
+    "build": "echo 'No build process needed'",
     "start": "python3 -m http.server 3000"
   },
   "dependencies": {},
-  "devDependencies": {},
-  "engines": {
-    "node": ">=14"
-  }
+  "devDependencies": {}
 }
