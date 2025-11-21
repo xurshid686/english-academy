@@ -3,157 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IELTS Master Platform - Complete Teaching Solution</title>
+    <title>IELTS Platform</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <script src="assets/js/utils.js"></script>
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
-    <div class="container mx-auto px-4 py-8">
-        <!-- Header -->
-        <header class="text-center mb-16">
-            <div class="w-32 h-32 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-8 shadow-2xl">
-                <i class="fas fa-graduation-cap text-white text-5xl"></i>
-            </div>
-            <h1 class="text-6xl font-bold text-gray-800 mb-6">
-                🎯 IELTS Master Platform
-            </h1>
-            <p class="text-2xl text-gray-600 mb-8 max-w-4xl mx-auto leading-relaxed">
-                Complete Teaching Solution with Student Management, Progress Tracking, and Telegram Integration
-            </p>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen flex items-center justify-center">
+    <div class="text-center">
+        <div class="w-32 h-32 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-8 shadow-2xl">
+            <i class="fas fa-graduation-cap text-white text-5xl"></i>
+        </div>
+        
+        <h1 class="text-5xl font-bold text-gray-800 mb-4">IELTS Platform</h1>
+        <p class="text-xl text-gray-600 mb-12">Choose your portal to continue</p>
+
+        <div class="flex flex-col sm:flex-row gap-6 justify-center">
+            <a href="/admin/login.html" 
+               class="bg-blue-600 text-white px-12 py-6 rounded-2xl font-bold text-xl hover:bg-blue-700 transition-all duration-300 shadow-2xl transform hover:scale-105 flex items-center justify-center space-x-3">
+               <i class="fas fa-chalkboard-teacher text-2xl"></i>
+               <span>Teacher Portal</span>
+            </a>
             
-            <!-- Action Buttons -->
-            <div class="flex flex-col sm:flex-row gap-6 justify-center mb-12">
-                <a href="/admin/login.html" 
-                   class="bg-blue-600 text-white px-12 py-6 rounded-2xl font-bold text-xl hover:bg-blue-700 transition-all duration-300 shadow-2xl transform hover:scale-105 flex items-center justify-center space-x-3">
-                   <i class="fas fa-chalkboard-teacher text-2xl"></i>
-                   <span>Teacher Portal</span>
-                </a>
-                <a href="/student/login.html" 
-                   class="bg-green-600 text-white px-12 py-6 rounded-2xl font-bold text-xl hover:bg-green-700 transition-all duration-300 shadow-2xl transform hover:scale-105 flex items-center justify-center space-x-3">
-                   <i class="fas fa-user-graduate text-2xl"></i>
-                   <span>Student Portal</span>
-                </a>
-            </div>
-        </header>
-
-        <!-- Features Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-            <!-- Feature 1 -->
-            <div class="bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
-                <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mb-6">
-                    <i class="fas fa-users text-blue-600 text-2xl"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-gray-800 mb-4">Student Management</h3>
-                <p class="text-gray-600 text-lg leading-relaxed">Add, remove, and manage students with individual login credentials and progress tracking.</p>
-            </div>
-
-            <!-- Feature 2 -->
-            <div class="bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
-                <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mb-6">
-                    <i class="fas fa-edit text-green-600 text-2xl"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-gray-800 mb-4">Test Management</h3>
-                <p class="text-gray-600 text-lg leading-relaxed">Create unlimited tests with different types, auto-grading, and detailed analytics.</p>
-            </div>
-
-            <!-- Feature 3 -->
-            <div class="bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
-                <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mb-6">
-                    <i class="fas fa-chart-line text-purple-600 text-2xl"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-gray-800 mb-4">Progress Tracking</h3>
-                <p class="text-gray-600 text-lg leading-relaxed">Real-time progress monitoring with percentage scores and performance analytics.</p>
-            </div>
-
-            <!-- Feature 4 -->
-            <div class="bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
-                <div class="w-16 h-16 bg-yellow-100 rounded-2xl flex items-center justify-center mb-6">
-                    <i class="fab fa-telegram text-yellow-600 text-2xl"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-gray-800 mb-4">Telegram Integration</h3>
-                <p class="text-gray-600 text-lg leading-relaxed">Instant notifications for new students, test submissions, and important activities.</p>
-            </div>
-
-            <!-- Feature 5 -->
-            <div class="bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
-                <div class="w-16 h-16 bg-red-100 rounded-2xl flex items-center justify-center mb-6">
-                    <i class="fas fa-shield-alt text-red-600 text-2xl"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-gray-800 mb-4">Secure Access</h3>
-                <p class="text-gray-600 text-lg leading-relaxed">Protected admin panel with individual student credentials and session management.</p>
-            </div>
-
-            <!-- Feature 6 -->
-            <div class="bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
-                <div class="w-16 h-16 bg-indigo-100 rounded-2xl flex items-center justify-center mb-6">
-                    <i class="fas fa-rocket text-indigo-600 text-2xl"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-gray-800 mb-4">Vercel Ready</h3>
-                <p class="text-gray-600 text-lg leading-relaxed">Deploy instantly with zero configuration. Fast, reliable, and always available.</p>
-            </div>
-        </div>
-
-        <!-- Stats -->
-        <div class="bg-white rounded-3xl shadow-lg p-10 text-center">
-            <h3 class="text-3xl font-bold text-gray-800 mb-8">Platform Statistics</h3>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-                <div>
-                    <div class="text-4xl font-bold text-blue-600" id="totalStudents">0</div>
-                    <div class="text-gray-600 text-lg">Students</div>
-                </div>
-                <div>
-                    <div class="text-4xl font-bold text-green-600" id="activeTests">0</div>
-                    <div class="text-gray-600 text-lg">Active Tests</div>
-                </div>
-                <div>
-                    <div class="text-4xl font-bold text-purple-600" id="totalLessons">0</div>
-                    <div class="text-gray-600 text-lg">Lessons</div>
-                </div>
-                <div>
-                    <div class="text-4xl font-bold text-orange-600" id="avgProgress">0%</div>
-                    <div class="text-gray-600 text-lg">Avg Progress</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Quick Links -->
-        <div class="mt-16 text-center">
-            <h3 class="text-2xl font-bold text-gray-800 mb-6">Quick Access</h3>
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="/admin/login.html" class="bg-gray-800 text-white px-6 py-3 rounded-xl hover:bg-gray-900 transition-colors">
-                    Admin Login
-                </a>
-                <a href="/student/login.html" class="bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700 transition-colors">
-                    Student Login
-                </a>
-                <a href="/admin/students.html" class="bg-green-600 text-white px-6 py-3 rounded-xl hover:bg-green-700 transition-colors">
-                    Manage Students
-                </a>
-                <a href="/admin/tests.html" class="bg-purple-600 text-white px-6 py-3 rounded-xl hover:bg-purple-700 transition-colors">
-                    Create Tests
-                </a>
-            </div>
+            <a href="/student/login.html" 
+               class="bg-green-600 text-white px-12 py-6 rounded-2xl font-bold text-xl hover:bg-green-700 transition-all duration-300 shadow-2xl transform hover:scale-105 flex items-center justify-center space-x-3">
+               <i class="fas fa-user-graduate text-2xl"></i>
+               <span>Student Portal</span>
+            </a>
         </div>
     </div>
-
-    <script>
-        // Load statistics
-        function loadStatistics() {
-            const students = platform.getData('students');
-            const tests = platform.getData('tests');
-            const lessons = platform.getData('lessons');
-            
-            document.getElementById('totalStudents').textContent = students.length;
-            document.getElementById('activeTests').textContent = tests.filter(t => t.active).length;
-            document.getElementById('totalLessons').textContent = lessons.length;
-            
-            const avgProgress = students.length > 0 ? 
-                students.reduce((sum, student) => sum + (student.progress || 0), 0) / students.length : 0;
-            document.getElementById('avgProgress').textContent = Math.round(avgProgress) + '%';
-        }
-
-        document.addEventListener('DOMContentLoaded', loadStatistics);
-    </script>
 </body>
 </html>
