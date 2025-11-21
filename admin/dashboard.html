@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - IELTS Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/auth.js"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Security Check -->
+    <script>
+        if (!auth.checkAdminAuth()) {
+            // Redirect will happen automatically
+        }
+    </script>
+
+    <div class="flex">
+        <!-- Sidebar -->
+        <div class="w-64 bg-gradient-to-b from-blue-800 to-purple-900 min-h-screen text-white shadow-2xl">
+            <div class="p-6 border-b border-blue-700">
+                <h1 class="text-2xl font-bold flex items-center">
+                    <i class="fas fa-graduation-cap mr-3 text-yellow-400"></i>
+                    IELTS Admin
+                </h1>
+                <p class="text-blue-200 text-sm mt-1">Teacher Control Panel</p>
+            </div>
+            
+            <nav class="mt-6">
+                <a href="dashboard.html" class="block py-4 px-6 bg-blue-700 text-white border-r-4 border-yellow-400 shadow-inner">
+                    <i class="fas fa-tachometer-alt mr-3"></i>Dashboard
+                </a>
+                <a href="students.html" class="block py-4 px-6 text-blue-200 hover:bg-blue-700 transition-colors duration-200">
+                    <i class="fas fa-users mr-3"></i>Students
+                </a>
+                <a href="lessons.html" class="block py-4 px-6 text-blue-200 hover:bg-blue-700 transition-colors duration-200">
+                    <i class="fas fa-book-open mr-3"></i>Lessons
+                </a>
+                <a href="tests.html" class="block py-4 px-6 text-blue-200 hover:bg-blue-700 transition-colors duration-200">
+                    <i class="fas fa-edit mr-3"></i>Tests
+                </a>
+                <a href="analytics.html" class="block py-4 px-6 text-blue-200 hover:bg-blue-700 transition-colors duration-200">
+                    <i class="fas fa-chart-bar mr-3"></i>Analytics
+                </a>
+                
+                <!-- Settings Section -->
+                <div class="mt-8 border-t border-blue-700 pt-4">
+                    <a href="#" onclick="showSettingsModal()" class="block py-3 px-6 text-blue-200 hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-cog mr-3"></i>Settings
+                    </a>
+                    <a href="#" onclick="showTelegramConfig()" class="block py-3 px-6 text-blue-200 hover:bg-blue-700 transition-colors">
+                        <i class="fab fa-telegram mr-3"></i>Telegram
+                    </a>
+                    <a href="#" onclick="auth.logout('admin')" class="block py-3 px-6 text-red-200 hover:bg-red-700 transition-colors">
+                        <i class="fas fa-sign-out-alt mr-3"></i>Logout
+                    </a>
+                </div>
+            </nav>
+
+            <!-- Quick Stats -->
+            <div class="mt-8 p-4 bg-blue-700 mx-4 rounded-lg">
+                <h4 class="font-semibold mb-3 text-sm text-blue-200">Quick Stats</h4>
+                <div class="space-y-2 text-xs">
+                    <div class="flex justify-between">
+                        <span>Students:</span>
+                        <span class="font-bold" id="sidebarStudents">0</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Active Tests:</span>
+                        <span class="font-bold" id="sidebarTests">0</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Avg Progress:</span>
+                        <span class="font-bold" id="sidebarProgress">0%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-8">
+            <!-- Header -->
+            <div class="flex justify-between items-center mb-8">
+                <div>
+                    <h2 class="text-4xl font-bold text-gray-800">Teacher Dashboard</h2>
+                    <p class="text-gray-600 text-lg mt-2">Welcome back! Here's your platform overview</p>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-right">
+                        <div class="text-sm text-gray-500">Last login</div>
+                        <div class="font-semibold text-gray-700" id="lastLoginTime"></div>
+                    </div>
+                    <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <!-- Total Students -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg border-l-4 border-blue-500 hover:shadow-xl transition-shadow duration-300">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="text-gray-600 text-sm font-medium">Total Students</p>
+                            <h3 class="text-4xl font-bold text-gray-800 mt-2" id="totalStudents">0</h3>
+                            <p class="text-green-600 text-sm mt-1 flex items-center">
+                                <i class="fas fa-arrow-up mr-1"></i>
+                                <span id="studentsGrowth">0</span> this month
+                            </p>
+                        </div>
+                        <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center">
+                            <i class="fas fa-users text-blue-600 text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Tests -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg border-l-4 border-green-500 hover:shadow-xl transition-shadow duration-300">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="text-gray-600 text-sm font-medium">Active Tests</p>
+                            <h3 class="text-4xl font-bold text-gray-800 mt-2" id="activeTests">0</h3>
+                            <p class="text-blue-600 text-sm mt-1">
+                                <span id="pendingSubmissions">0</span> pending submissions
+                            </p>
+                        </div>
+                        <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center">
+                            <i class="fas fa-edit text-green-600 text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Total Lessons -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg border-l-4 border-purple-500 hover:shadow-xl transition-shadow duration-300">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="text-gray-600 text-sm font-medium">Total Lessons</p>
+                            <h3 class="text-4xl font-bold text-gray-800 mt-2" id="totalLessons">0</h3>
+                            <p class="text-purple-600 text-sm mt-1">
+                                <span id="recentLessons">0</span> new this week
+                            </p>
+                        </div>
+                        <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center">
+                            <i class="fas fa-book-open text-purple-600 text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Average Progress -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg border-l-4 border-orange-500 hover:shadow-xl transition-shadow duration-300">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="text-gray-600 text-sm font-medium">Average Progress</p>
+                            <h3 class="text-4xl font-bold text-gray-800 mt-2" id="avgProgress">0%</h3>
+                            <p class="text-orange-600 text-sm mt-1 flex items-center">
+                                <i class="fas fa-chart-line mr-1"></i>
+                                Overall performance
+                            </p>
+                        </div>
+                        <div class="w-16 h-16 bg-orange-100 rounded-2xl flex items-center justify-center">
+                            <i class="fas fa-chart-line text-orange-600 text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Recent Activity -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-bold text-gray-800 flex items-center">
+                            <i class="fas fa-history mr-3 text-blue-500"></i>
+                            Recent Activity
+                        </h3>
+                        <button onclick="refreshActivities()" class="text-blue-600 hover:text-blue-800">
+                            <i class="fas fa-redo-alt"></i>
+                        </button>
+                    </div>
+                    <div id="recentActivity" class="space-y-3 max-h-96 overflow-y-auto">
+                        <!-- Activities will load here -->
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg">
+                    <h3 class="text-xl font-bold text-gray-800 mb-6 flex items-center">
+                        <i class="fas fa-bolt mr-3 text-yellow-500"></i>
+                        Quick Actions
