@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - IELTS Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/auth.js"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-900 to-purple-900 min-h-screen flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-md">
+        <!-- Security Header -->
+        <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg mb-6">
+            <div class="flex items-center">
+                <i class="fas fa-shield-alt text-red-500 text-xl mr-3"></i>
+                <div>
+                    <h3 class="font-bold text-red-800">Restricted Access</h3>
+                    <p class="text-red-600 text-sm">Admin panel - Authorized personnel only</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Login Form -->
+        <div class="text-center mb-8">
+            <div class="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <i class="fas fa-lock text-white text-3xl"></i>
+            </div>
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">Teacher Portal</h1>
+            <p class="text-gray-600">Secure access to admin dashboard</p>
+        </div>
+
+        <form id="adminLoginForm" class="space-y-6">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Admin ID</label>
+                <input type="text" 
+                       id="username"
+                       class="w-full p-4 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
+                       placeholder="Enter admin ID"
+                       required>
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                <input type="password" 
+                       id="password"
+                       class="w-full p-4 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
+                       placeholder="Enter password"
+                       required>
+            </div>
+
+            <button type="submit" 
+                    class="w-full bg-blue-600 text-white py-4 px-4 rounded-xl font-bold text-lg hover:bg-blue-700 transition-colors transform hover:scale-105 shadow-lg">
+                <i class="fas fa-sign-in-alt mr-3"></i>Access Dashboard
+            </button>
+        </form>
+
+        <!-- Demo Credentials -->
+        <div class="mt-6 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+            <h4 class="font-semibold text-yellow-800 mb-2 flex items-center">
+                <i class="fas fa-info-circle mr-2"></i>
+                Default Credentials:
+            </h4>
+            <div class="text-sm text-yellow-700 space-y-1">
+                <div><strong>ID:</strong> ielts_teacher</div>
+                <div><strong>Password:</strong> admin123</div>
+            </div>
+        </div>
+
+        <!-- Security Tips -->
+        <div class="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+            <h4 class="font-semibold text-blue-800 mb-2 flex items-center">
+                <i class="fas fa-lightbulb mr-2"></i>
+                Security Tips:
+            </h4>
+            <ul class="text-sm text-blue-700 space-y-1">
+                <li>• Change default password after first login</li>
+                <li>• Don't share credentials with students</li>
+                <li>• Logout after each session</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Check if already logged in
+        if (sessionStorage.getItem('adminAuthenticated') === 'true') {
+            window.location.href = 'dashboard.html';
+        }
+
+        document.getElementById('adminLoginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const button = this.querySelector('button[type="submit"]');
+            
+            // Show loading state
+            button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Authenticating...';
+            button.disabled = true;
+            
+            // Simulate network delay
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            if (auth.adminLogin(username, password)) {
+                platform.showNotification('✅ Login successful! Redirecting...', 'success');
+                
+                // Send Telegram notification
+                await platform.sendTelegramNotification(`🔐 Admin logged into IELTS platform at ${new Date().toLocaleString()}`);
+                
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1000);
+            } else {
+                platform.showNotification('❌ Invalid credentials. Please try again.', 'error');
+                button.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i>Access Dashboard';
+                button.disabled = false;
+            }
+        });
+
+        // Focus on username field
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('username').focus();
+        });
+    </script>
+</body>
+</html>
