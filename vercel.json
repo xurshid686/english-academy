@@ -1,9 +1,13 @@
 {
   "version": 2,
-  "name": "ielts-telegram-platform",
+  "name": "ielts-perfect-platform",
   "builds": [
     {
       "src": "**/*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "**/*.js",
       "use": "@vercel/static"
     }
   ],
@@ -12,8 +16,5 @@
       "src": "/(.*)",
       "dest": "/$1"
     }
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  }
+  ]
 }
