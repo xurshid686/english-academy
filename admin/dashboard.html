@@ -190,3 +190,435 @@
                     <h3 class="text-xl font-bold text-gray-800 mb-6 flex items-center">
                         <i class="fas fa-bolt mr-3 text-yellow-500"></i>
                         Quick Actions
+                    </h3>
+                    <div class="space-y-4">
+                        <button onclick="showAddStudentModal()" 
+                                class="w-full bg-blue-600 text-white py-4 px-6 rounded-xl text-left hover:bg-blue-700 transition-all duration-200 transform hover:scale-105 shadow-md flex items-center justify-between group">
+                            <div class="flex items-center">
+                                <i class="fas fa-user-plus mr-4 text-xl"></i>
+                                <div>
+                                    <div class="font-semibold text-lg">Add New Student</div>
+                                    <div class="text-blue-100 text-sm">Register new student account</div>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+
+                        <button onclick="showCreateTestModal()" 
+                                class="w-full bg-green-600 text-white py-4 px-6 rounded-xl text-left hover:bg-green-700 transition-all duration-200 transform hover:scale-105 shadow-md flex items-center justify-between group">
+                            <div class="flex items-center">
+                                <i class="fas fa-plus-circle mr-4 text-xl"></i>
+                                <div>
+                                    <div class="font-semibold text-lg">Create New Test</div>
+                                    <div class="text-green-100 text-sm">Design assessment</div>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+
+                        <button onclick="showAddLessonModal()" 
+                                class="w-full bg-purple-600 text-white py-4 px-6 rounded-xl text-left hover:bg-purple-700 transition-all duration-200 transform hover:scale-105 shadow-md flex items-center justify-between group">
+                            <div class="flex items-center">
+                                <i class="fas fa-book-medical mr-4 text-xl"></i>
+                                <div>
+                                    <div class="font-semibold text-lg">Add Lesson</div>
+                                    <div class="text-purple-100 text-sm">Upload study material</div>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+
+                        <button onclick="location.href='students.html'" 
+                                class="w-full bg-orange-600 text-white py-4 px-6 rounded-xl text-left hover:bg-orange-700 transition-all duration-200 transform hover:scale-105 shadow-md flex items-center justify-between group">
+                            <div class="flex items-center">
+                                <i class="fas fa-tasks mr-4 text-xl"></i>
+                                <div>
+                                    <div class="font-semibold text-lg">Manage Students</div>
+                                    <div class="text-orange-100 text-sm">View all students</div>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Students -->
+            <div class="mt-8 bg-white p-6 rounded-2xl shadow-lg">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold text-gray-800">Recent Students</h3>
+                    <a href="students.html" class="text-blue-600 hover:text-blue-800 font-semibold flex items-center">
+                        View All <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                <div id="recentStudents" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Students will load here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Student Modal -->
+    <div id="addStudentModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white p-8 rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-800">Add New Student</h3>
+                <button onclick="hideModal('addStudentModal')" class="text-gray-500 hover:text-gray-700 text-2xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="addStudentForm" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
+                        <input type="text" name="name" class="w-full p-4 border-2 border-gray-300 rounded-xl text-lg" 
+                               placeholder="Enter full name" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+                        <input type="email" name="email" class="w-full p-4 border-2 border-gray-300 rounded-xl text-lg" 
+                               placeholder="student@example.com" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Username *</label>
+                        <input type="text" name="username" class="w-full p-4 border-2 border-gray-300 rounded-xl text-lg" 
+                               placeholder="Choose username" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Password *</label>
+                        <input type="password" name="password" class="w-full p-4 border-2 border-gray-300 rounded-xl text-lg" 
+                               placeholder="Set password" required>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Group</label>
+                        <select name="group" class="w-full p-4 border-2 border-gray-300 rounded-xl text-lg">
+                            <option value="beginner">IELTS Beginner</option>
+                            <option value="intermediate">IELTS Intermediate</option>
+                            <option value="advanced">IELTS Advanced</option>
+                            <option value="express">IELTS Express</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="bg-blue-50 p-4 rounded-xl border border-blue-200">
+                    <h4 class="font-semibold text-blue-800 mb-2 flex items-center">
+                        <i class="fas fa-info-circle mr-2"></i>
+                        Student Access Information
+                    </h4>
+                    <p class="text-blue-700 text-sm">
+                        Student will be able to login at: <code class="bg-blue-100 px-2 py-1 rounded">your-domain.vercel.app/student/login.html</code>
+                    </p>
+                </div>
+
+                <div class="flex space-x-4 pt-4">
+                    <button type="submit" class="flex-1 bg-blue-600 text-white py-4 rounded-xl font-bold text-lg hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-user-plus mr-2"></i>Add Student
+                    </button>
+                    <button type="button" onclick="hideModal('addStudentModal')" 
+                            class="flex-1 bg-gray-500 text-white py-4 rounded-xl font-bold text-lg hover:bg-gray-600 transition-colors">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white p-8 rounded-3xl w-full max-w-md">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-800">Admin Settings</h3>
+                <button onclick="hideModal('settingsModal')" class="text-gray-500 hover:text-gray-700 text-2xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <form id="changePasswordForm" class="space-y-6">
+                <h4 class="text-lg font-semibold text-gray-800 mb-4">Change Password</h4>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Current Password</label>
+                    <input type="password" id="currentPassword" class="w-full p-4 border-2 border-gray-300 rounded-xl" required>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">New Password</label>
+                    <input type="password" id="newPassword" class="w-full p-4 border-2 border-gray-300 rounded-xl" required>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Confirm New Password</label>
+                    <input type="password" id="confirmPassword" class="w-full p-4 border-2 border-gray-300 rounded-xl" required>
+                </div>
+
+                <div class="flex space-x-4">
+                    <button type="submit" class="flex-1 bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700">
+                        Change Password
+                    </button>
+                    <button type="button" onclick="hideModal('settingsModal')" 
+                            class="flex-1 bg-gray-500 text-white py-3 rounded-xl font-semibold hover:bg-gray-600">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Modal functions
+        function showAddStudentModal() {
+            document.getElementById('addStudentModal').classList.remove('hidden');
+            document.getElementById('addStudentModal').classList.add('flex');
+        }
+
+        function showSettingsModal() {
+            document.getElementById('settingsModal').classList.remove('hidden');
+            document.getElementById('settingsModal').classList.add('flex');
+        }
+
+        function hideModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+            document.getElementById(modalId).classList.remove('flex');
+        }
+
+        // Load dashboard data
+        function loadDashboardData() {
+            const students = platform.getData('students');
+            const tests = platform.getData('tests');
+            const lessons = platform.getData('lessons');
+            const activities = platform.getData('adminActivities');
+            const homeworks = platform.getData('homeworks');
+            const testResults = platform.getData('testResults');
+
+            // Update main stats
+            document.getElementById('totalStudents').textContent = students.length;
+            document.getElementById('activeTests').textContent = tests.filter(t => t.active).length;
+            document.getElementById('totalLessons').textContent = lessons.length;
+
+            // Calculate average progress
+            const avgProgress = students.length > 0 ? 
+                students.reduce((sum, student) => sum + (student.progress || 0), 0) / students.length : 0;
+            document.getElementById('avgProgress').textContent = Math.round(avgProgress) + '%';
+
+            // Update growth numbers
+            const thisMonth = new Date().getMonth();
+            const studentsThisMonth = students.filter(s => new Date(s.joined).getMonth() === thisMonth).length;
+            document.getElementById('studentsGrowth').textContent = studentsThisMonth;
+
+            const pendingSubmissions = testResults.filter(tr => !tr.graded).length;
+            document.getElementById('pendingSubmissions').textContent = pendingSubmissions;
+
+            const recentLessons = lessons.filter(l => {
+                const lessonDate = new Date(l.created);
+                const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+                return lessonDate > weekAgo;
+            }).length;
+            document.getElementById('recentLessons').textContent = recentLessons;
+
+            // Update sidebar stats
+            document.getElementById('sidebarStudents').textContent = students.length;
+            document.getElementById('sidebarTests').textContent = tests.filter(t => t.active).length;
+            document.getElementById('sidebarProgress').textContent = Math.round(avgProgress) + '%';
+
+            // Update last login time
+            const loginTime = sessionStorage.getItem('adminLoginTime');
+            if (loginTime) {
+                document.getElementById('lastLoginTime').textContent = platform.formatDate(loginTime);
+            }
+
+            updateRecentActivity(activities);
+            updateRecentStudents(students);
+        }
+
+        function updateRecentActivity(activities) {
+            const container = document.getElementById('recentActivity');
+            const recentActivities = activities.slice(-8).reverse();
+            
+            if (recentActivities.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 text-gray-500">
+                        <i class="fas fa-inbox text-4xl mb-3 text-gray-300"></i>
+                        <p>No recent activity</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = recentActivities.map(activity => `
+                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl border-l-4 ${
+                    activity.type === 'security' ? 'border-red-400' : 
+                    activity.type === 'student' ? 'border-green-400' : 'border-blue-400'
+                }">
+                    <div class="flex items-center space-x-3 flex-1">
+                        <div class="w-3 h-3 rounded-full ${
+                            activity.type === 'security' ? 'bg-red-400' : 
+                            activity.type === 'student' ? 'bg-green-400' : 'bg-blue-400'
+                        }"></div>
+                        <span class="text-gray-700 text-sm flex-1">${activity.action}</span>
+                    </div>
+                    <span class="text-xs text-gray-500 whitespace-nowrap">${activity.time}</span>
+                </div>
+            `).join('');
+        }
+
+        function updateRecentStudents(students) {
+            const container = document.getElementById('recentStudents');
+            const recentStudents = students.slice(-6).reverse();
+            
+            if (recentStudents.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-3 text-center py-8 text-gray-500">
+                        <i class="fas fa-users text-4xl mb-3 text-gray-300"></i>
+                        <p>No students yet</p>
+                        <button onclick="showAddStudentModal()" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                            Add First Student
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = recentStudents.map(student => `
+                <div class="bg-white border-2 border-gray-100 rounded-xl p-4 hover:shadow-md transition-shadow duration-200">
+                    <div class="flex items-center space-x-3 mb-3">
+                        <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold text-lg">
+                            ${student.name.split(' ').map(n => n[0]).join('').toUpperCase()}
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-semibold text-gray-800 truncate">${student.name}</h4>
+                            <p class="text-sm text-gray-600">@${student.username}</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="text-gray-500">${student.group}</span>
+                        <span class="font-semibold text-blue-600">${student.progress || 0}%</span>
+                    </div>
+                    <div class="mt-3 flex space-x-2">
+                        <button onclick="viewStudent(${student.id})" class="flex-1 bg-blue-600 text-white py-2 rounded-lg text-xs hover:bg-blue-700">
+                            View
+                        </button>
+                        <button onclick="editStudent(${student.id})" class="flex-1 bg-gray-600 text-white py-2 rounded-lg text-xs hover:bg-gray-700">
+                            Edit
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function refreshActivities() {
+            const activities = platform.getData('adminActivities');
+            updateRecentActivity(activities);
+            platform.showNotification('Activities refreshed', 'success');
+        }
+
+        // Form handlers
+        document.getElementById('addStudentForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const students = platform.getData('students');
+            
+            // Check if username already exists
+            const existingStudent = students.find(s => s.username === formData.get('username'));
+            if (existingStudent) {
+                platform.showNotification('❌ Username already exists', 'error');
+                return;
+            }
+
+            const newStudent = {
+                id: platform.generateId(),
+                name: formData.get('name'),
+                email: formData.get('email'),
+                username: formData.get('username'),
+                password: formData.get('password'),
+                group: formData.get('group'),
+                progress: 0,
+                joined: new Date().toISOString(),
+                lastActive: new Date().toISOString()
+            };
+            
+            students.push(newStudent);
+            platform.saveData('students', students);
+            
+            // Log activity
+            platform.logActivity(`👤 Added student: ${newStudent.name} (${newStudent.group})`, 'student');
+            
+            // Send Telegram notification
+            const telegramMessage = `
+🎉 *New Student Registered!*
+
+👤 *Name:* ${newStudent.name}
+📧 *Email:* ${newStudent.email}
+👥 *Group:* ${newStudent.group}
+🆔 *Username:* ${newStudent.username}
+📅 *Joined:* ${new Date().toLocaleString()}
+
+_Welcome to IELTS preparation!_
+            `.trim();
+            
+            const telegramSent = await platform.sendTelegramNotification(telegramMessage);
+            
+            platform.showNotification(
+                `Student ${newStudent.name} added successfully! ${telegramSent ? '📱 Telegram notification sent!' : ''}`, 
+                'success'
+            );
+            
+            hideModal('addStudentModal');
+            this.reset();
+            loadDashboardData();
+        });
+
+        document.getElementById('changePasswordForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (newPassword !== confirmPassword) {
+                platform.showNotification('❌ New passwords do not match', 'error');
+                return;
+            }
+            
+            if (newPassword.length < 6) {
+                platform.showNotification('❌ Password must be at least 6 characters', 'error');
+                return;
+            }
+            
+            const result = auth.changeAdminPassword(currentPassword, newPassword);
+            
+            if (result.success) {
+                platform.showNotification('✅ Password changed successfully', 'success');
+                hideModal('settingsModal');
+                this.reset();
+            } else {
+                platform.showNotification(`❌ ${result.message}`, 'error');
+            }
+        });
+
+        // Student management functions
+        function viewStudent(studentId) {
+            // Store student ID for the students page
+            sessionStorage.setItem('viewStudentId', studentId);
+            window.location.href = 'students.html';
+        }
+
+        function editStudent(studentId) {
+            // Store student ID for editing
+            sessionStorage.setItem('editStudentId', studentId);
+            window.location.href = 'students.html';
+        }
+
+        // Auto-logout after 2 hours
+        setTimeout(() => {
+            if (sessionStorage.getItem('adminAuthenticated')) {
+                platform.showNotification('Session expired for security. Please login again.', 'info');
+                setTimeout(() => auth.logout('admin'), 2000);
+            }
+        }, 2 * 60 * 60 * 1000);
+
+        // Load data when page loads
+        document.addEventListener('DOMContentLoaded', loadDashboardData);
+    </script>
+</body>
+</html>
