@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - IELTS Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/auth.js"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <script>if (!auth.checkStudentAuth()) {}</script>
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-800">IELTS Student Portal</h1>
+                <p class="text-gray-600" id="welcomeMessage">Welcome!</p>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="profile.html" class="text-blue-600 hover:text-blue-800">
+                    <i class="fas fa-user mr-1"></i>Profile
+                </a>
+                <button onclick="auth.logout('student')" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+                    Logout
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm mb-8">
+        <div class="container mx-auto px-4">
+            <div class="flex space-x-8">
+                <a href="dashboard.html" class="py-4 text-blue-600 border-b-2 border-blue-600 font-semibold">
+                    <i class="fas fa-tachometer-alt mr-2"></i>Dashboard
+                </a>
+                <a href="tests.html" class="py-4 text-gray-600 hover:text-blue-600">
+                    <i class="fas fa-edit mr-2"></i>Tests
+                </a>
+                <a href="progress.html" class="py-4 text-gray-600 hover:text-blue-600">
+                    <i class="fas fa-chart-line mr-2"></i>Progress
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4">
+        <!-- Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-2xl shadow-lg">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-gray-600">Overall Progress</p>
+                        <h3 class="text-3xl font-bold text-gray-800" id="overallProgress">0%</h3>
+                    </div>
+                    <i class="fas fa-chart-line text-3xl text-blue-500"></i>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl shadow-lg">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-gray-600">Tests Completed</p>
+                        <h3 class="text-3xl font-bold text-gray-800" id="testsCompleted">0</h3>
+                    </div>
+                    <i class="fas fa-check-circle text-3xl text-green-500"></i>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl shadow-lg">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-gray-600">Current Level</p>
+                        <h3 class="text-3xl font-bold text-gray-800" id="currentLevel">Beginner</h3>
+                    </div>
+                    <i class="fas fa-signal text-3xl text-purple-500"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Available Tests -->
+        <div class="bg-white p-6 rounded-2xl shadow-lg">
+            <h3 class="text-xl font-bold mb-4">Available Tests</h3>
+            <div id="availableTests" class="space-y-3">
+                <!-- Tests will load here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function loadStudentDashboard() {
+            const student = auth.getCurrentStudent();
+            if (!student) return;
+
+            document.getElementById('welcomeMessage').textContent = `Welcome, ${student.name}!`;
+            document.getElementById('overallProgress').textContent = student.progress + '%';
+            document.getElementById('currentLevel').textContent = student.group.charAt(0).toUpperCase() + student.group.slice(1);
+
+            // Calculate tests completed
+            const testResults = platform.getData('testResults');
+            const studentTests = testResults.filter(tr => tr.studentId === student.id);
+            document.getElementById('testsCompleted').textContent = studentTests.length;
+
+            loadAvailableTests();
+        }
+
+        function loadAvailableTests() {
+            const tests = platform.getData('tests');
+            const activeTests = tests.filter(test => test.active);
+            const container = document.getElementById('availableTests');
+            
+            if (activeTests.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-center py-4">No tests available at the moment</p>';
+                return;
+            }
+            
+            container.innerHTML = activeTests.map(test => `
+                <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                    <div>
+                        <h4 class="font-semibold">${test.title}</h4>
+                        <p class="text-sm text-gray-600">${test.description || 'No description'}</p>
+                    </div>
+                    <button onclick="startTest(${test.id})" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                        Start Test
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function startTest(testId) {
+            sessionStorage.setItem('currentTestId', testId);
+            window.location.href = 'tests.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', loadStudentDashboard);
+    </script>
+</body>
+</html>
